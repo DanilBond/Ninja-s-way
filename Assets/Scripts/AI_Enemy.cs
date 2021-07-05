@@ -29,7 +29,7 @@ public class AI_Enemy : MonoBehaviour
 
     private Animator anim;
 
-
+    public GameObject Sword;
     private void Start()
     {
         Nma = GetComponent<NavMeshAgent>();
@@ -51,6 +51,7 @@ public class AI_Enemy : MonoBehaviour
         {
             if(attackInterval <= 0f)
             {
+                Sword.GetComponent<BoxCollider>().enabled = true;
                 int rand = Random.Range(0, 1000);
                 if (rand >= 400f)
                 {
@@ -63,6 +64,10 @@ public class AI_Enemy : MonoBehaviour
                 }
                 attackInterval = Random.Range(attackIntervalMin, attackIntervalMax);
             }
+        }
+        else
+        {
+            Sword.GetComponent<BoxCollider>().enabled = false;
         }
         if (isPlayerVisible)
         {

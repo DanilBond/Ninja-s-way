@@ -27,7 +27,7 @@ public class PlayerAttackController : MonoBehaviour
     public float ver;
 
 
-    bool canGetHit = true;
+    public bool canGetHit = true;
     public float getHitTimeout;
 
     void Start()
@@ -162,13 +162,17 @@ public class PlayerAttackController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Sword")
+        if (other.gameObject.tag == "Sword" && other.gameObject.name != "MySword")
         {
             if (canGetHit)
             {
-                anim.SetTrigger("GetHit_" + Random.Range(1, 8));
                 canGetHit = false;
+                // anim.SetTrigger("GetHit_" + Random.Range(1, 5));
+                anim.Play("GetHit_" + Random.Range(1, 5));
+                anim.applyRootMotion = true;
+
                 Invoke("SetCanGetHit", getHitTimeout);
+                Debug.Log("Hit");
             }
         }
     }
@@ -176,5 +180,6 @@ public class PlayerAttackController : MonoBehaviour
     void SetCanGetHit()
     {
         canGetHit = true;
+        anim.applyRootMotion = false;
     }
 }
